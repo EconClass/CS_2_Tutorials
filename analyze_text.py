@@ -1,5 +1,6 @@
 import sys
 import string
+import collections
 
 def clean_text(source_text):
     '''
@@ -21,21 +22,24 @@ def histogram(cleaned_text):
     and return a histogram data structure that stores each unique word along with
     the number of times the word appears in the source text.
     '''
-    pass
+    hist_obj = collections.Counter(clean_text)
+    return hist_obj
 
 def unique_words(histogram_in):
     '''
     This function takes a histogram argument and 
     returns the total count of unique words in the histogram
     '''
-    pass
+    return len(histogram_in)
 
 def frequency(word, histogram_in):
     '''
     This function takes a word and histogram argument and
     returns the number of times that word appears in a text.
     '''
-    pass
+    if hasattr(histogram_in, word):
+        return getattr(histogram_in, word)
+    else: return 0
 
 
 if __name__ == "__main__":
