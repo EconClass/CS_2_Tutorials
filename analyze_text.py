@@ -1,20 +1,23 @@
 import sys
-
+import string
 
 def clean_text(source_text):
     '''
-    Removes empty spaces, punctuations and ...
+    Removes empty spaces, punctuations and special characters
     '''
-    manifesto = open('the_book.txt')
-    manifesto_list = manifesto.read().replace('\n', ' ')
-    manifesto.close()
-    manifesto_list = manifesto_list.split()
-    manifesto_list = [ word.strip() for word in manifesto_list ]
-    print(manifesto_list)
+    punctuation_table = str.maketrans( '\n-' , '  ', '''1234567890~!@#$.,%^&*()_+?/`[];'":|''' )
+
+    text = open('the_book.txt')
+    text_list = text.read().translate(punctuation_table).replace('--', ' ')
+    text.close()
+    
+    text_list = text_list.lower().split()
+    text_list = [ word.strip() for word in text_list ]
+    return text_list
 
 def histogram(cleaned_text):
     '''
-    This function takes a source_text as an argument
+    This function takes a cleaned_text list as an argument
     and return a histogram data structure that stores each unique word along with
     the number of times the word appears in the source text.
     '''
@@ -37,4 +40,6 @@ def frequency(word, histogram_in):
 
 if __name__ == "__main__":
 
-    clean_text('the_book.txt')
+    text = clean_text('the_book.txt')
+    print(text)
+    # hist_text = histogram(text)
