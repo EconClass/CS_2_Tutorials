@@ -1,6 +1,6 @@
 import sys
 import string
-import collections
+# import collections CHEATER!
 
 def clean_text(source_text):
     '''
@@ -30,10 +30,28 @@ def histogram(cleaned_text):
     and return a histogram data structure that stores each unique word along with
     the number of times the word appears in the source text.
     '''
+    # Empty dictionary to be used to log occurances of words
+    dictionary = dict()
+
+    # List of unique words to be used as keys for dictionary
+    unique_list = list()
+    
+    for word in cleaned_text:
+        if word not in unique_list:
+            unique_list.append(word)
+
+    for word in unique_list:
+        occurance = cleaned_text.count(word)
+        dictionary[word] = occurance
+    
+    # *********************CHEATER!********************* #
     # Creates a dictionary of 'key: value' pairs where  
     # unique words are keys and occurances are values
-    hist_obj = collections.Counter(cleaned_text)
-    return hist_obj
+    # hist_obj = collections.Counter(cleaned_text)
+    # return hist_obj
+    return dictionary
+
+    
 
 def unique_words(histogram_in):
     '''
@@ -50,8 +68,6 @@ def frequency( histogram_in, word ):
     if word in histogram_in:
         return histogram_in[word]
     else: return 0
-   
-
 
 if __name__ == "__main__":
     source = str(sys.argv[1])
@@ -59,6 +75,7 @@ if __name__ == "__main__":
 
     text = clean_text(source)
     hist_text = histogram(text)
+    # print(hist_text)
     
     not_same = unique_words(hist_text)
     print('There are {} unique words in the text.'.format(not_same))
