@@ -42,7 +42,7 @@ def histogram(cleaned_text):
 
     for word in unique_list:
         occurance = cleaned_text.count(word)
-        dictionary[word] = occurance
+        dictionary[word] = [occurance]
     
     # *********************CHEATER!********************* #
     # Creates a dictionary of 'key: value' pairs where  
@@ -66,19 +66,37 @@ def frequency( histogram_in, word ):
     returns the number of times that word appears in a text.
     '''
     if word in histogram_in:
-        return histogram_in[word]
+        return histogram_in[word[0]]
     else: return 0
+
+
+def all_words(histogram_in):
+    total = 0
+    for word in histogram_in:
+        total += histogram_in[word][0]
+    return total
+
+def probability(histogram_in, total):
+    # sum_words = all_words(histogram_in)
+    for word in histogram_in:
+       prob = histogram_in[word][0] / total
+       histogram_in[word].append(prob)
+    return histogram_in
+    # pass
 
 if __name__ == "__main__":
     source = str(sys.argv[1])
-    find_word = str(sys.argv[2])
+    # find_word = str(sys.argv[2])
 
     text = clean_text(source)
     hist_text = histogram(text)
-    # print(hist_text)
+    sum_words = all_words(hist_text)
+    # print(sum_words)
+    # print(probability(hist_text, sum_words))
     
-    not_same = unique_words(hist_text)
-    print('There are {} unique words in the text.'.format(not_same))
+    # not_same = unique_words(hist_text)
+    # print('There are {} unique words in the text.'.format(not_same))
 
-    num_word = frequency(hist_text, find_word)
-    print('There are {} "{}" in the text'.format(num_word, find_word))
+    # num_word = frequency(hist_text, find_word)
+    # print('There are {} "{}" in the text'.format(num_word, find_word))
+    pass
