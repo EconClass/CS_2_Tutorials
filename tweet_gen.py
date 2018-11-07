@@ -1,5 +1,6 @@
 import sys
 import string
+import random
 # import collections CHEATER!
 
 def clean_text(source_text):
@@ -42,7 +43,7 @@ def histogram(cleaned_text):
 
     for word in unique_list:
         occurance = cleaned_text.count(word)
-        dictionary[word] = [occurance]
+        dictionary[word] = occurance
     
     # *********************CHEATER!********************* #
     # Creates a dictionary of 'key: value' pairs where  
@@ -50,8 +51,6 @@ def histogram(cleaned_text):
     # hist_obj = collections.Counter(cleaned_text)
     # return hist_obj
     return dictionary
-
-    
 
 def unique_words(histogram_in):
     '''
@@ -66,37 +65,54 @@ def frequency( histogram_in, word ):
     returns the number of times that word appears in a text.
     '''
     if word in histogram_in:
-        return histogram_in[word[0]]
+        return histogram_in[word]
     else: return 0
 
 
 def all_words(histogram_in):
+    '''Calculates the total number of words in the text.'''
     total = 0
     for word in histogram_in:
-        total += histogram_in[word][0]
+        total += histogram_in[word]
     return total
 
-def probability(histogram_in, total):
-    # sum_words = all_words(histogram_in)
+
+def cummulative(histogram_in, num_word):
+    '''
+    This function sums the frequency of the words consecutively
+    then appends the value to the list value of the key word.
+    '''
+    max_len = len(histogram_in)
+    count = 0
+    rand_list = []
+
+    while( len(rand_list) <= num_word):
+        rand_num = random.randint(0, max_len)
+        rand_list.append(rand_num)
+    
     for word in histogram_in:
-       prob = histogram_in[word][0] / total
-       histogram_in[word].append(prob)
-    return histogram_in
-    # pass
+        index += 1
+        count += histogram_in[word][1]
+        
+    return
+
+# def make_sentence(histogram_in):
+#     random.randint(0, len(hist_text))
+#     pass
 
 if __name__ == "__main__":
     source = str(sys.argv[1])
-    # find_word = str(sys.argv[2])
+    find_word = str(sys.argv[2])
 
     text = clean_text(source)
     hist_text = histogram(text)
-    sum_words = all_words(hist_text)
+    # print(random.randint(0, len(hist_text)))
+    print(cummulative(hist_text, 9))
+    # sum_words = all_words(hist_text)
     # print(sum_words)
-    # print(probability(hist_text, sum_words))
-    
+
     # not_same = unique_words(hist_text)
     # print('There are {} unique words in the text.'.format(not_same))
 
     # num_word = frequency(hist_text, find_word)
-    # print('There are {} "{}" in the text'.format(num_word, find_word))
-    pass
+    # print('There are {} "{}"s in the text'.format(num_word, find_word))
