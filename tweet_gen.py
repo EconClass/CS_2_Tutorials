@@ -77,7 +77,7 @@ def all_items(histogram_in):
     return total
 
 
-def cummulative_sample(histogram_in, num_item):
+def cummulative_sample(histogram_in, num_iter):
     '''
     This function sums the frequency of the items consecutively
     then appends the value to the list value of the key item.
@@ -85,34 +85,44 @@ def cummulative_sample(histogram_in, num_item):
     max_len = all_items(histogram_in)
     rand_num = random.randint( 0, max_len )
 
-    iterations = 0
-    while (iterations < num_item):
+    list_tuples = histogram_in.items()
 
-        iterations +=1
+    iterations = 0
+    cume_sum = 0
+
+    while (iterations < num_iter):
+        for word in histogram_in:
+            cume_sum += list_tuples[1]
+            if cume_sum >= rand_num:
+                break
+        iterations += 1
     
     return 
 
-def dictogram(iterable):
-    '''
-    This function takes an iterable thing as an argument
-    to return a histogram data structure that stores each unique item along with
-    the number of times the item appears in the iterable thing.
-    '''
-    # Empty dictionary to be used to log occurances of items
-    dictionary = dict()
+class Dictogram(dict):
+    def _dictogram(self, iterable):
+        '''
+        This function takes an iterable thing as an argument
+        to return a histogram data structure that stores each unique item along with
+        the number of times the item appears in the iterable thing.
+        '''
+        # Empty dictionary to be used to log occurances of items
+        dictionary = dict()
 
-    # List of unique items to be used as keys for dictionary
-    unique_list = list()
-    
-    for item in iterable:
-        if item not in unique_list:
-            unique_list.append(item)
+        # List of unique items to be used as keys for dictionary
+        unique_list = list()
+        
+        for item in iterable:
+            if item not in unique_list:
+                unique_list.append(item)
 
-    for item in unique_list:
-        occurance = iterable.count(item)
-        dictionary[item] = occurance
-    
-    return dictionary
+        for item in unique_list:
+            occurance = iterable.count(item)
+            dictionary[item] = occurance
+        
+        return dictionary
+
+
 # class TestClass:
 #     def __init__(self):
 #         x = 12341234
@@ -123,9 +133,9 @@ if __name__ == "__main__":
     # instancelist = [ TestClass() for i in range(7)]
 
     text = clean_text(source)
-    hist_text = dictogram(text)
+    # hist_text = dictogram(text)
 
-    print(hist_text)
+    # print(hist_text)
 
     # print(histogram(instancelist))
     # print(random.randint(0, len(hist_text)))
@@ -136,5 +146,5 @@ if __name__ == "__main__":
     # not_same = unique_items(hist_text)
     # print('There are {} unique items in the text.'.format(not_same))
 
-    # num_item = frequency(hist_text, find_item)
-    # print('There are {} "{}"s in the text'.format(num_item, find_item))
+    # num_iter = frequency(hist_text, find_item)
+    # print('There are {} "{}"s in the text'.format(num_iter, find_item))
