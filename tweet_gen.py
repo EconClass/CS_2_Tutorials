@@ -17,102 +17,124 @@ def clean_text(source_text):
     text_list = text.read().translate(punctuation_table).replace('--', ' ')
     text.close()
     
-    # Splits text into list and lowers case of all words
+    # Splits text into list and lowers case of all items
     text_list = text_list.lower().split()
 
-    # Creates NEW list of same words with out whitespace on ends
-    text_list = [ word.strip() for word in text_list ]
+    # Creates NEW list of same items with out whitespace on ends
+    text_list = [ item.strip() for item in text_list ]
 
     return text_list
 
-def histogram(cleaned_text):
+def histogram(iterable):
     '''
-    This function takes a cleaned_text list as an argument
-    and return a histogram data structure that stores each unique word along with
-    the number of times the word appears in the source text.
+    This function takes a iterable list as an argument
+    and return a histogram data structure that stores each unique item along with
+    the number of times the item appears in the source text.
     '''
-    # Empty dictionary to be used to log occurances of words
+    # Empty dictionary to be used to log occurances of items
     dictionary = dict()
 
-    # List of unique words to be used as keys for dictionary
+    # List of unique items to be used as keys for dictionary
     unique_list = list()
     
-    for word in cleaned_text:
-        if word not in unique_list:
-            unique_list.append(word)
+    for item in iterable:
+        if item not in unique_list:
+            unique_list.append(item)
 
-    for word in unique_list:
-        occurance = cleaned_text.count(word)
-        dictionary[word] = occurance
+    for item in unique_list:
+        occurance = iterable.count(item)
+        dictionary[item] = occurance
     
     # *********************CHEATER!********************* #
     # Creates a dictionary of 'key: value' pairs where  
-    # unique words are keys and occurances are values
-    # hist_obj = collections.Counter(cleaned_text)
+    # unique items are keys and occurances are values
+    # hist_obj = collections.Counter(iterable)
     # return hist_obj
     return dictionary
 
-def unique_words(histogram_in):
+def unique_items(histogram_in):
     '''
     This function takes a histogram argument and 
-    returns the total count of unique words in the histogram
+    returns the total count of unique items in the histogram
     '''
     return len(histogram_in)
 
-def frequency( histogram_in, word ):
+def frequency( histogram_in, item ):
     '''
-    This function takes a word and histogram argument and
-    returns the number of times that word appears in a text.
+    This function takes a item and histogram argument and
+    returns the number of times that item appears in a text.
     '''
-    if word in histogram_in:
-        return histogram_in[word]
+    if item in histogram_in:
+        return histogram_in[item]
     else: return 0
 
 
-def all_words(histogram_in):
-    '''Calculates the total number of words in the text.'''
+def all_items(histogram_in):
+    '''Calculates the total number of items in the text.'''
     total = 0
-    for word in histogram_in:
-        total += histogram_in[word]
+    for item in histogram_in:
+        total += histogram_in[item]
     return total
 
 
-def cummulative(histogram_in, num_word):
+def cummulative_sample(histogram_in, num_item):
     '''
-    This function sums the frequency of the words consecutively
-    then appends the value to the list value of the key word.
+    This function sums the frequency of the items consecutively
+    then appends the value to the list value of the key item.
     '''
-    max_len = len(histogram_in)
-    count = 0
-    rand_list = []
+    max_len = all_items(histogram_in)
+    rand_num = random.randint( 0, max_len )
 
-    while( len(rand_list) <= num_word):
-        rand_num = random.randint(0, max_len)
-        rand_list.append(rand_num)
+    iterations = 0
+    while (iterations < num_item):
+
+        iterations +=1
     
-    for word in histogram_in:
-        index += 1
-        count += histogram_in[word][1]
-        
-    return
+    return 
 
-# def make_sentence(histogram_in):
-#     random.randint(0, len(hist_text))
-#     pass
+def dictogram(iterable):
+    '''
+    This function takes an iterable thing as an argument
+    to return a histogram data structure that stores each unique item along with
+    the number of times the item appears in the iterable thing.
+    '''
+    # Empty dictionary to be used to log occurances of items
+    dictionary = dict()
+
+    # List of unique items to be used as keys for dictionary
+    unique_list = list()
+    
+    for item in iterable:
+        if item not in unique_list:
+            unique_list.append(item)
+
+    for item in unique_list:
+        occurance = iterable.count(item)
+        dictionary[item] = occurance
+    
+    return dictionary
+# class TestClass:
+#     def __init__(self):
+#         x = 12341234
 
 if __name__ == "__main__":
     source = str(sys.argv[1])
-    find_word = str(sys.argv[2])
+    # find_item = str(sys.argv[2])
+    # instancelist = [ TestClass() for i in range(7)]
 
     text = clean_text(source)
-    hist_text = histogram(text)
+    hist_text = dictogram(text)
+
+    print(hist_text)
+
+    # print(histogram(instancelist))
     # print(random.randint(0, len(hist_text)))
-    print(cummulative(hist_text, 9))
-    # sum_words = all_words(hist_text)
-    # print(sum_words)
+    # print(cummulative_sample(hist_text, 9))
+    # sum_items = all_items(hist_text)
+    # print(sum_items)
 
-    # not_same = unique_words(hist_text)
-    # print('There are {} unique words in the text.'.format(not_same))
+    # not_same = unique_items(hist_text)
+    # print('There are {} unique items in the text.'.format(not_same))
 
-    # num_word = frequency(hist_text, find_word)
-    # print('There are {} "{}"s in the text'.format(num_word, find_word))
+    # num_item = frequency(hist_text, find_item)
+    # print('There are {} "{}"s in the text'.format(num_item, find_item))
